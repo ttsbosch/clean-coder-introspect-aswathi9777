@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <string>
 
 struct TR
 {
@@ -18,43 +19,11 @@ public:
     
 private:
     static const float LotSize;
-    std::vector<std::string> SplitString(const std::string& str, char delimiter)
-    {
-        std::vector<std::string> tokens;
-        std::string token;
-        std::istringstream tokenStream(str);
-        while (std::getline(tokenStream, token, delimiter))
-        {
-            tokens.push_back(token);
-        }
-        return tokens;
-    }
-
-    bool intGetFromString(const std::string& str, int& value)
-    {
-        try
-        {
-            value = std::stoi(str);
-            return true;
-        }
-        catch (const std::exception&)
-        {
-            return false;
-        }
-    }
-
-    bool toDouble(const std::string& str, double& value)
-    {
-        try
-        {
-            value = std::stod(str);
-            return true;
-        }
-        catch (const std::exception&)
-        {
-            return false;
-        }
-    }
+    std::vector<std::string> SplitString(const std::string& str, char delimiter);
+    bool CheckIntegerValidity(const std::string& str, int& value);
+    bool CheckDoubleValidity(const std::string& str, double& value);
+    bool ProcessLine(const std::string& line, TR& trade, int lineNumber);
+    std::string GenerateXML(const std::vector<TR>& trades);
 };
 const float Processor::LotSize = 100000;
 
